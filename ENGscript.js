@@ -199,45 +199,6 @@ let rooms = {
     }
 };
 
-//////////Room management functions/////////
-const addNewResident = (room, newResidentName, newUserName,newPassword, newBirthday) => {
-    rooms[room].residentName = newResidentName;
-    rooms[room].residentUserName = newUserName;
-    rooms[room].residentPassword = newPassword;
-    rooms[room].residentBirthday = newBirthday;
-    rooms[room].isLastTimeGarbage = false;
-    rooms[room].isNextTimeGarbage = false;
-    rooms[room].isLineLinked = false;
-    rooms[room].isGarbageWeek = false;
-
-    addNamesToHTML();
-}
-const changeResidentName = (room, newResidentName) =>{
-    rooms[room].residentName = newResidentName;
-    addNamesToHTML();
-}
-const changeResidentUserName = (room, newUserName) =>{
-    rooms[room].residentUserName = newUserName;
-}
-const changeResidentPassword = (room, newPassword) =>{
-    rooms[room].residentPassword = newPassword;
-}
-const changeResidentThisWeekGarbageStatus = (room) =>{
-    rooms[room].isGarbageWeek = !rooms[room].isGarbageWeek;
-    updateHTMLGarbageTurn();
-}
-const changeResidentLastWeekGarbageStatus = (room) =>{
-    rooms[room].isLastTimeGarbage = !rooms[room].isLastTimeGarbage;
-    updateHTMLGarbageTurn();
-}
-const changeResidentNextWeekGarbageStatus = (room) =>{
-    rooms[room].isNextTimeGarbage = !rooms[room].isNextTimeGarbage;
-    updateHTMLGarbageTurn();
-}
-const changeResidentLineStatus = (room) =>{
-    rooms[room].isLineLinked = !rooms[room].isLineLinked;
-}
-
 
 // Buttons
 
@@ -256,30 +217,6 @@ const changeResidentLineStatus = (room) =>{
             location.replace("https://fly0w.github.io/Omotesando1JAP/");
         }
     );
-
-
-
-
-//Home page Room names
-const addNamesToHTML = () => {
-    let HTMLnames = document.getElementsByClassName("name");
-    let HTMLnamesKanji = document.getElementsByClassName("nameKanji");
-    let names = [];
-    let namesKanji = [];
-
-
-    Object.entries(rooms).forEach(value => {
-        names.push(value[1].residentName);
-        namesKanji.push(value[1].residentNameKanji);
-    });
-
-    for (let i = 0; i < HTMLnames.length; i++){
-        HTMLnames[i].innerHTML = names[i];
-        HTMLnamesKanji[i].innerHTML = namesKanji[i];
-    }
-};
-
-addNamesToHTML();
 
 
 //Garbage turn status
@@ -363,58 +300,10 @@ const updateListGarbageTurn = () => {
     // let today = "Wednesday";
     let fulldate = dateNow.toLocaleDateString();
 
-    let HTMLannounceTypeGarbage = document.getElementById("typegarbage");
     let HTMLannounceDayGarbage = document.getElementById("daygarbage");
     let HTMLannounceDayToday = document.getElementById("date");
-
-
-
-    switch (today){
-        case "Monday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="combustible">COMBUSTIBLE</li></ul>';
-            HTMLannounceDayGarbage.className = "animate__animated animate__pulse animate__infinite content tonight"
-            HTMLannounceDayGarbage.innerHTML = 'TONIGHT';
-            HTMLannounceDayToday.innerHTML = 'MONDAY - ' + fulldate;
-            break;
-        case "Tuesday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="noncombustible">NON-COMBUSTIBLE</li><li class="petbottle">PET BOTTLES</li><li class="glassbottle">GLASS BOTTLES</li><li class="aluminumcan">ALUMINUM CANS</li><li class="cardboard">CARDBOARD</li></ul>';
-            HTMLannounceDayGarbage.className = "content tomorrow"
-            HTMLannounceDayGarbage.innerHTML = 'TOMORROW NIGHT';
-            HTMLannounceDayToday.innerHTML = 'TUESDAY - ' + fulldate;
-            break;
-        case "Wednesday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="noncombustible">NON-COMBUSTIBLE</li><li class="petbottle">PET BOTTLES</li><li class="glassbottle">GLASS BOTTLES</li><li class="aluminumcan">ALUMINUM CANS</li><li class="cardboard">CARDBOARD</li></ul>';
-            HTMLannounceDayGarbage.className = "animate__animated animate__pulse animate__infinite content tonight"
-            HTMLannounceDayGarbage.innerHTML = 'TONIGHT';
-            HTMLannounceDayToday.innerHTML = 'WEDNESDAY - ' + fulldate;
-            break;
-        case "Thursday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="combustible">COMBUSTIBLE</li></ul>';
-            HTMLannounceDayGarbage.className = "animate__animated animate__pulse animate__infinite content tonight"
-            HTMLannounceDayGarbage.innerHTML = 'TONIGHT';
-            HTMLannounceDayToday.innerHTML = 'THURSDAY - ' + fulldate;
-            break;
-        case "Friday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="combustible">COMBUSTIBLE</li></ul>';
-            HTMLannounceDayGarbage.className = "content"
-            HTMLannounceDayGarbage.innerHTML = 'MONDAY NIGHT';
-            HTMLannounceDayToday.innerHTML = 'FRIDAY - ' + fulldate;
-            break;
-        case "Saturday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="combustible">COMBUSTIBLE</li></ul>';
-            HTMLannounceDayGarbage.className = "content"
-            HTMLannounceDayGarbage.innerHTML = 'MONDAY NIGHT';
-            HTMLannounceDayToday.innerHTML = 'SATURDAY - ' + fulldate;
-            break;
-        case "Sunday":
-            HTMLannounceTypeGarbage.innerHTML = '<ul><li class="combustible">COMBUSTIBLE</li></ul>';
-            HTMLannounceDayGarbage.className = "content tomorrow"
-            HTMLannounceDayGarbage.innerHTML = 'TOMORROW NIGHT';
-            HTMLannounceDayToday.innerHTML = 'SUNDAY - ' + fulldate;
-            break;
-        default:
-            HTMLannounceTypeGarbage.innerHTML = "Error";
-    }
+    HTMLannounceDayGarbage.innerHTML = 
+    '<h5>MONDAY NIGHT :</h5><ul><li class="combustible">COMBUSTIBLE</li></ul><br/><h5>WEDNESDAY NIGHT : </h5><ul><li class="noncombustible">NON-COMBUSTIBLE</li><li class="petbottle">PET BOTTLES</li><li class="glassbottle">GLASS BOTTLES</li><li class="aluminumcan">ALUMINUM CANS</li><li class="cardboard">CARDBOARD</li></ul><br/><h5>THURSDAY NIGHT : </h5><ul><li class="combustible">COMBUSTIBLE</li></ul><br/>';
 }
 
 const updateHTMLGarbageTurn = () => {
@@ -448,48 +337,9 @@ const updateHTMLGarbageTurn = () => {
         }
     });
         
-    //Loop that adds text and style in the room boxes depending on the garbage turn
-    for (let i = 0; i < HTMLturn.length; i++){ 
-        if (turnsNow[i] === true){
-            HTMLturn[i].innerHTML = "It's your turn !";
-            HTMLturn[i].classList.add("now");
-        } else if (turnsLastWeek[i] === true){
-            HTMLturn[i].innerHTML = "Was last turn";
-            HTMLturn[i].classList.add("last");
-        } else if (turnsNextWeek[i] === true){
-            HTMLturn[i].innerHTML = "Is next turn";
-            HTMLturn[i].classList.add("next");
-        } else {
-            HTMLturn[i].innerHTML = "";
-            HTMLturn[i].className = ("turn");
-        }  
-    } 
-
-
     HTMLannounceThisWeek.innerHTML = `${thisWeekResp[0]} & ${thisWeekResp[1]}`; 
     HTMLannounceLastWeek.innerHTML = `${lastWeekResp[0]} & ${lastWeekResp[1]}`;
     HTMLannounceNextWeek.innerHTML = `${nextWeekResp[0]} & ${nextWeekResp[1]}`;
 }
 
 updateHTMLGarbageTurn();
-
-
-// //Login Button
-// const buttonLogin = document.getElementById("buttonLogin");
-
-// buttonLogin.addEventListener("click", 
-//     function loginRedirect(){
-//         let room = document.getElementById("roomNo").value;
-//         let userName = document.getElementById("userName").value;
-//         let password = document.getElementById("password").value;
-
-//         if (userName === rooms[room].residentUserName && password === rooms[room].residentPassword) {
-//             console.log("C'est bon !");       
-//             document.getElementsByClassName("invalid")[0].innerHTML= "" ; 
-//             // location.replace(LIEN DE LA PAGE);
-//         } else {
-//             console.log("Tu rentres pas !");
-//             document.getElementsByClassName("invalid")[0].innerHTML= "Username or Password invalid" ;
-//         }
-//     }
-// );
