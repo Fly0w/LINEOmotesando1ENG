@@ -214,7 +214,7 @@ let rooms = {
     const buttonJapanese = document.getElementById("japanese");
     buttonJapanese.addEventListener("click", 
         function japaneseVersion(){
-            location.replace("https://fly0w.github.io/Omotesando1JAP/");
+            location.replace("https://fly0w.github.io/LINEOmotesando1JAP/");
         }
     );
 
